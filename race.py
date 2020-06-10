@@ -9,20 +9,40 @@ black_color_rgb = (0,0,0)
 red_color_rgb = (255,0,0)
 grey = (119,118, 110)
 paused = False
+current_images_dir = os.getcwd() + "/images/"
 
 pygame.init()
 game_display = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Race")
 clock= pygame.time.Clock()
-car_image = pygame.image.load("C:/python_game/images/car_2.png")
-green_background = pygame.image.load("C:/python_game/images/green_background.jpg")
-yellow_strip = pygame.image.load("C:/python_game/images/yellow strip.jpg")
-white_strip = pygame.image.load("C:/python_game/images/white_strip.jpg")
+car_image = pygame.image.load(current_images_dir + "car_2.png")
+green_background = pygame.image.load(current_images_dir + "green_background.jpg")
+yellow_strip = pygame.image.load(current_images_dir + "yellow strip.jpg")
+white_strip = pygame.image.load(current_images_dir + "white_strip.jpg")
+intro_background = pygame.image.load(current_images_dir + "intro_background.jpg")
+instruction_background = pygame.image.load(current_images_dir + "instruction_background.jpg")
 car_width = 50
 cars_passed = 0
 level = 0 
 score = 0
 
+
+def intro_loop(): 
+    intro = True 
+
+    while intro:
+        for event in pygame.event.get(): 
+            if event.type == pygame.QUIT: 
+                pygame.quit()
+                quit()
+                sys.exit()
+
+        game_display.blit(intro_background, (0, 0))
+        pygame.display.update()
+        clock.tick(50)
+        large_text = pygame.font.Font("freesansbold.ttf", 115)
+        # TextSurf, TextRect = text_objects("Needy for Speed",
+        #  )
 
 def render_obstacle(x_coord, y_coord, obs): 
     absolute_path = r"C:/python_game/images/"
