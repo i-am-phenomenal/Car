@@ -6,7 +6,9 @@ import os
 screen_width = 800
 screen_height = 600 
 black_color_rgb = (0,0,0)
+bright_green_rgb = (0, 255, 0)
 red_color_rgb = (255,0,0)
+green_color_rgb = ( 0, 200, 0)
 grey = (119,118, 110)
 paused = False
 current_images_dir = os.getcwd() + "/images/"
@@ -27,6 +29,38 @@ level = 0
 score = 0
 
 
+def render_button(message, x,y,w,h,ic,ac, action=None): 
+    mouse = pygame.mouse.get_pos()
+    click = pygame.mouse.get_pressed()
+    if x+w> mouse[0] > x and (y + h) > mouse[1] > y: 
+        pygame.draw.rect(game_display, ac, (x,y,w,h))
+        if click[0] == 1 and action != None: 
+            print(action, "ACTION: ")
+            if action == "Play": 
+                counter = True
+                while counter: 
+                    for event in pygame.event.get(): 
+                        if event.type == pygame.QUIT:
+                            pygame.quit()
+                            quit()
+                            sys.exit()
+
+                    # game_loop()
+                # game_loop()
+
+            elif action == "Quit":
+                pygame.quit()
+                quit()
+                sys.exit()
+
+    else: 
+        pygame.draw.rect(game_display, ic, (x,y,w,h))
+
+    small_text = pygame.font.Font("freesansbold.ttf", 20)
+    text_surface, text_rect = text_objects(message, small_text)
+    text_rect.center = ((x + (w/2)), (y + (h/2)))
+    game_display.blit(text_surface, text_rect)
+
 def intro_loop(): 
     intro = True 
 
@@ -41,8 +75,12 @@ def intro_loop():
         pygame.display.update()
         clock.tick(50)
         large_text = pygame.font.Font("freesansbold.ttf", 115)
-        # TextSurf, TextRect = text_objects("Needy for Speed",
-        #  )
+        TextSurf, TextRect = text_objects("Needy for Speed",large_text)
+        TextRect.center = (400, 100)
+        game_display.blit(TextSurf, TextRect)
+        render_button("Start", 150, 520, 100, 50, green_color_rgb, bright_green_rgb, "Play")
+        pygame.display.update()
+        clock.tick(50)
 
 def render_obstacle(x_coord, y_coord, obs): 
     absolute_path = r"C:/python_game/images/"
